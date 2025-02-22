@@ -1,7 +1,8 @@
-.container {
-    width: 100vw !important; /* Ensures full viewport width */
-    max-width: 100% !important;
-    margin: 0 auto; /* Centers if needed */
-    padding: 0 !important;
-  }
-  
+.contain {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
