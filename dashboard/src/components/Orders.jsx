@@ -7,24 +7,24 @@ const Orders = () => {
 
   useEffect(() => {
     axios
-      .get("https://zerodha-clone-6f98.onrender.com//allOrders")
+      .get("https://zerodha-clone-6f98.onrender.com/allOrders")
       .then((res) => setAllOrders(res.data))
       .catch((err) => console.error("Error fetching orders:", err));
   }, []);
 
   return (
-    <div className="orders">
+    <>
       <h3 className="title">Orders ({allOrders.length})</h3>
 
-      {allOrders.length === 0 ? (
-        <div className="no-orders">
-          <p>You haven't placed any orders today</p>
-          <Link to={"/"} className="btn">
-            Get started
-          </Link>
-        </div>
-      ) : (
-        <div className="order-table">
+      <div className="order-table">
+        {allOrders.length === 0 ? (
+          <div className="no-orders">
+            <p>You haven't placed any orders today</p>
+            <Link to={"/"} className="btn">
+              Get started
+            </Link>
+          </div>
+        ) : (
           <table>
             <thead>
               <tr>
@@ -39,15 +39,17 @@ const Orders = () => {
                 <tr key={index}>
                   <td>{order.name}</td>
                   <td>{order.qty}</td>
-                  <td>{order.price}</td>
-                  <td>{order.mode}</td>
+                  <td>{order.price.toFixed(2)}</td>
+                  <td className={order.mode === "BUY" ? "buy-mode" : "sell-mode"}>
+                    {order.mode}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   );
 };
 
