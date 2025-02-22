@@ -40,7 +40,7 @@ const Login = () => {
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 shadow-lg" style={{ maxWidth: "400px", width: "100%" }}>
-        <h2 className="text-center mb-4">Login</h2>
+        <h2 className="text-center mb-4">Login To Explore Kite <img src="/ZerodhaKiteLogo.png" alt="" style={{width: "2rem"}}/></h2>
 
         {message && (
           <div className={`alert ${success ? "alert-success" : "alert-danger"}`} role="alert">
