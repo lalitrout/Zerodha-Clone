@@ -74,7 +74,7 @@ const WatchList = () => {
   // };
 
   return (
-    <div className="watchlist-container">
+    <div className="watchlist-container d-none d-md-block">
       <div className="search-container">
         <input
           type="text"

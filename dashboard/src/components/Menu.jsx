@@ -40,27 +40,27 @@ const Menu = () => {
         {/* Collapsible Menu */}
         <div className={`collapse navbar-collapse ${isMenuOpen ? "show" : ""}`}>
           <ul className="navbar-nav">
-            <li className="nav-item ">
+            <li className="nav-item d-none d-md-block">
               <Link className="nav-link" to="/" onClick={() => handleMenuClick(0)}>
                 Dashboard
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item d-none d-md-block">
               <Link className="nav-link" to="/orders" onClick={() => handleMenuClick(1)}>
                 Orders
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item d-none d-md-block">
               <Link className="nav-link" to="/holdings" onClick={() => handleMenuClick(2)}>
                 Holdings
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item d-none d-md-block">
               <Link className="nav-link" to="/positions" onClick={() => handleMenuClick(3)}>
                 Positions
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item d-none d-md-block">
               <Link className="nav-link" to="/funds" onClick={() => handleMenuClick(4)}>
                 Funds
               </Link>
