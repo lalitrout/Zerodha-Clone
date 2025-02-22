@@ -203,19 +203,34 @@ app.post("/newOrder", async (req, res) => {
   try {
     const { name, qty, price, mode } = req.body;
 
+    // ✅ Validate Input
     if (!name || !qty || !price || !mode) {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    let newOrder = new OrderModel({ name, qty, price, mode });
+    if (typeof qty !== "number" || qty <= 0) {
+      return res.status(400).json({ message: "Quantity must be a positive number" });
+    }
+
+    if (typeof price !== "number" || price <= 0) {
+      return res.status(400).json({ message: "Price must be a positive number" });
+    }
+
+    if (!["BUY", "SELL"].includes(mode.toUpperCase())) {
+      return res.status(400).json({ message: "Mode must be 'BUY' or 'SELL'" });
+    }
+
+    // ✅ Create New Order
+    let newOrder = new OrderModel({ name, qty, price, mode: mode.toUpperCase() });
     await newOrder.save();
 
-    res.status(201).json({ message: "Order saved successfully!" });
+    res.status(201).json({ message: "Order placed successfully!", success: true });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error saving order" });
+    console.error("Error saving order:", error);
+    res.status(500).json({ message: "Error saving order", success: false });
   }
 });
+
 
 // ✅ Start server
 app.listen(PORT, () => {
