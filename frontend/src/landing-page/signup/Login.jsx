@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const API_URL = process.env.REACT_APP_BACKEND_URL || "https://zerodha-clone-6f98.onrender.com"; // Update with your Render backend URL
+const API_URL ="https://zerodha-clone-6f98.onrender.com"; // Update with your Render backend URL
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -31,6 +31,7 @@ const Login = () => {
         window.location.href = "https://dashboard-8jy230lg2-lalit-routs-projects.vercel.app/"; // Redirect after login
       }, 2000);
     } catch (error) {
+      console.log(error);
       setMessage(error.response?.data?.message || "Something went wrong.");
       setSuccess(false);
     }
