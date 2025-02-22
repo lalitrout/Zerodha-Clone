@@ -15,10 +15,20 @@ const dbUrl = process.env.MONGO_URL || "mongodb://localhost:27017/myLocalDB";
 
 const app = express();
 
-// ✅ Proper CORS Configuration
+const allowedOrigins = [
+  "https://frontend-sigma-five-47.vercel.app/",
+  "https://frontend-f4bkx7xom-lalit-routs-projects.vercel.app/",
+];
+
 const corsOptions = {
-  origin: "https://frontend-fw5z6pf7x-lalit-routs-projects.vercel.app", // ✅ Correct frontend URL
-  credentials: true, // ✅ Allow cookies & authorization headers
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,
   methods: "GET,POST,PUT,DELETE,OPTIONS",
   allowedHeaders: "Content-Type,Authorization",
 };
@@ -52,7 +62,9 @@ const User = mongoose.model("User", userSchema);
 
 // Secret Token Function
 const createSecretToken = (userId) => {
-  return jwt.sign({ userId }, process.env.JWT_SECRET || "yourSecretKey", { expiresIn: "1h" });
+  return jwt.sign({ userId }, process.env.JWT_SECRET || "yourSecretKey", {
+    expiresIn: "1h",
+  });
 };
 
 // Signup Route
@@ -76,7 +88,11 @@ app.post("/signup", async (req, res) => {
 
     // Auto-login user after signup
     const token = createSecretToken(user._id);
-    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
 
     res.status(201).json({ message: "Signup successful", success: true, user });
   } catch (error) {
@@ -91,23 +107,35 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ message: "All fields are required", success: false });
+      return res
+        .status(400)
+        .json({ message: "All fields are required", success: false });
     }
 
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ message: "Incorrect email or password", success: false });
+      return res
+        .status(401)
+        .json({ message: "Incorrect email or password", success: false });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(401).json({ message: "Incorrect email or password", success: false });
+      return res
+        .status(401)
+        .json({ message: "Incorrect email or password", success: false });
     }
 
     const token = createSecretToken(user._id);
-    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
 
-    res.status(200).json({ message: "User logged in successfully", success: true, user });
+    res
+      .status(200)
+      .json({ message: "User logged in successfully", success: true, user });
   } catch (error) {
     console.error("Login Error:", error);
     res.status(500).json({ message: "Internal Server Error", success: false });
