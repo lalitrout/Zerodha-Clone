@@ -1,10 +1,10 @@
 import React, { useState } from "react";
+import axios from "axios";
+
+const API_URL = process.env.REACT_APP_BACKEND_URL || "https://zerodha-clone-6f98.onrender.com"; // Update with your Render backend URL
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -19,25 +19,19 @@ const Login = () => {
     setMessage(""); // Clear previous messages
 
     try {
-      const response = await fetch("http://localhost:3002/login", {
-        method: "POST",
+      const { data } = await axios.post(`${API_URL}/login`, formData, {
+        withCredentials: true, // Ensure cookies (if any) are sent
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        setMessage(data.message);
-        setSuccess(true);
-        setTimeout(() => {
-          window.location.href = "http://localhost:5173/"; // Redirect after login
-        }, 2000);
-      } else {
-        setMessage(data.message);
-        setSuccess(false);
-      }
+      setMessage(data.message);
+      setSuccess(true);
+
+      setTimeout(() => {
+        window.location.href = "https://dashboard-8jy230lg2-lalit-routs-projects.vercel.app/"; // Redirect after login
+      }, 2000);
     } catch (error) {
-      setMessage("Something went wrong. Please try again.");
+      setMessage(error.response?.data?.message || "Something went wrong.");
       setSuccess(false);
     }
   };

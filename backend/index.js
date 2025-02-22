@@ -17,6 +17,7 @@ const app = express();
 
 // Middleware
 app.use(cors());
+app.use(cors({ origin: "https://frontend-f4bkx7xom-lalit-routs-projects.vercel.app", credentials: true }));
 app.use(cookieParser());
 app.use(express.json()); // ✅ Required to parse JSON request bodies
 

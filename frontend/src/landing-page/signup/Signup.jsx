@@ -23,7 +23,7 @@ const Signup = () => {
 
       if (response.data.success) {
         alert("Signup successful!");
-        navigate("http://localhost:5173/"); // Redirect to dashboard
+        navigate("https://dashboard-8jy230lg2-lalit-routs-projects.vercel.app/"); // Redirect to dashboard
       } else {
         alert(response.data.message);
       }
