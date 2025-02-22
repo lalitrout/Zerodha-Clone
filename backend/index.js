@@ -15,9 +15,17 @@ const dbUrl = process.env.MONGO_URL || "mongodb://localhost:27017/myLocalDB";
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(cors({ origin: "https://frontend-fw5z6pf7x-lalit-routs-projects.vercel.app/login", credentials: true }));
+// ✅ Proper CORS Configuration
+const corsOptions = {
+  origin: "https://frontend-fw5z6pf7x-lalit-routs-projects.vercel.app", // ✅ Correct frontend URL
+  credentials: true, // ✅ Allow cookies & authorization headers
+  methods: "GET,POST,PUT,DELETE,OPTIONS",
+  allowedHeaders: "Content-Type,Authorization",
+};
+
+app.use(cors(corsOptions)); // ✅ Apply CORS middleware
+app.options("*", cors(corsOptions)); // ✅ Handle preflight requests
+
 app.use(cookieParser());
 app.use(express.json()); // ✅ Required to parse JSON request bodies
 
@@ -34,7 +42,7 @@ main();
 
 // User Schema
 const userSchema = new mongoose.Schema({
-  email: { type: String,unique: true, required: true },
+  email: { type: String, unique: true, required: true },
   password: { type: String, required: true },
   username: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
@@ -68,7 +76,7 @@ app.post("/signup", async (req, res) => {
 
     // Auto-login user after signup
     const token = createSecretToken(user._id);
-    res.cookie("token", token, { httpOnly: true, secure: false, sameSite: "strict" });
+    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
 
     res.status(201).json({ message: "Signup successful", success: true, user });
   } catch (error) {
@@ -77,37 +85,27 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-//Login
+// Login Route
 app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate request body
     if (!email || !password) {
       return res.status(400).json({ message: "All fields are required", success: false });
     }
 
-    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({ message: "Incorrect email or password", success: false });
     }
 
-    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: "Incorrect email or password", success: false });
     }
 
-    // Generate JWT Token
     const token = createSecretToken(user._id);
-
-    // Set cookie with token
-    res.cookie("token", token, {
-      httpOnly: true, // Prevents XSS attacks
-      secure: process.env.NODE_ENV === "production", // Secure cookie in production
-      sameSite: "strict",
-    });
+    res.cookie("token", token, { httpOnly: true, secure: true, sameSite: "strict" });
 
     res.status(200).json({ message: "User logged in successfully", success: true, user });
   } catch (error) {
@@ -115,7 +113,6 @@ app.post("/login", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error", success: false });
   }
 });
-
 
 // Get all positions
 app.get("/allPositions", async (req, res) => {
