@@ -1,0 +1,7 @@
+.container {
+    width: 100vw !important; /* Ensures full viewport width */
+    max-width: 100% !important;
+    margin: 0 auto; /* Centers if needed */
+    padding: 0 !important;
+  }
+  
