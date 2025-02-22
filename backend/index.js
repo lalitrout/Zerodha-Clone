@@ -16,8 +16,8 @@ const dbUrl = process.env.MONGO_URL || "mongodb://localhost:27017/myLocalDB";
 const app = express();
 
 const allowedOrigins = [
-  "https://frontend-sigma-five-47.vercel.app/",
-  "https://frontend-f4bkx7xom-lalit-routs-projects.vercel.app/",
+  "https://frontend-sigma-five-47.vercel.app",
+  "https://frontend-f4bkx7xom-lalit-routs-projects.vercel.app",
 ];
 
 const corsOptions = {
