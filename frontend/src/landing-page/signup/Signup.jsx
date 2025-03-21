@@ -11,6 +11,7 @@ const Signup = () => {
   });
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false); // State to track loading status
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,6 +20,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage("");
+    setLoading(true); // Set loading state to true when submitting
 
     try {
       const { data } = await axios.post(`${API_URL}/signup`, formData, {
@@ -37,13 +39,17 @@ const Signup = () => {
       console.error("Signup error:", error);
       setMessage(error.response?.data?.message || "Signup failed. Please try again.");
       setSuccess(false);
+    } finally {
+      setLoading(false); // Reset loading state after request completion
     }
   };
 
   return (
     <div className="container d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 shadow-lg" style={{ maxWidth: "400px", width: "100%" }}>
-        <h2 className="text-center mb-4">Signup To Explore Kite <img src="/ZerodhaKiteLogo.png" alt="" style={{width: "2rem"}}/></h2>
+        <h2 className="text-center mb-4">
+          Signup To Explore Kite <img src="/ZerodhaKiteLogo.png" alt="" style={{ width: "2rem" }} />
+        </h2>
 
         {message && (
           <div className={`alert ${success ? "alert-success" : "alert-danger"}`} role="alert">
@@ -88,7 +94,9 @@ const Signup = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">Sign Up</button>
+          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+            {loading ? "Signing up..." : "Sign Up"}
+          </button>
         </form>
 
         <p className="text-center mt-3">
