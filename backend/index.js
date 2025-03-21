@@ -17,6 +17,7 @@ const app = express();
 
 // ✅ Define allowed frontend origins
 const allowedOrigins = [
+  "https://frontend-sigma-five-47.vercel.app",
   "https://zerodha-clone-liard-psi.vercel.app",
   "https://frontend-f4bkx7xom-lalit-routs-projects.vercel.app",
   "https://dashboard-plum-iota.vercel.app",
