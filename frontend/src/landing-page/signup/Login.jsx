@@ -7,6 +7,7 @@ const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false); // New state for button loading
 
   // Handle input changes
   const handleChange = (e) => {
@@ -17,6 +18,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setMessage(""); // Clear previous messages
+    setLoading(true); // Set loading state
 
     try {
       const { data } = await axios.post(`${API_URL}/login`, formData, {
@@ -34,6 +36,8 @@ const Login = () => {
       console.log(error);
       setMessage(error.response?.data?.message || "Something went wrong.");
       setSuccess(false);
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -73,7 +77,9 @@ const Login = () => {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">Login</button>
+          <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </button>
         </form>
 
         <p className="text-center mt-3">
