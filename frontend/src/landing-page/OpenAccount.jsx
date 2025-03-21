@@ -10,7 +10,7 @@ function OpenAccount() {
           <button
             className="p-2 btn btn-primary w-25 mx-auto d-block " style={{fontSize: "16px"}}
           >
-            Sign up for free
+            <a href="/signup" style={{textDecoration: "none", color: "white"}}>Sign up for free</a>
           </button>
         </div>
       </div>

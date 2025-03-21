@@ -30,7 +30,7 @@ const Signup = () => {
 
       if (data.success) {
         setTimeout(() => {
-          window.location.href = "https://dashboard-8jy230lg2-lalit-routs-projects.vercel.app/";
+          window.location.href = "https://dashboard-plum-iota.vercel.app/";
         }, 2000);
       }
     } catch (error) {

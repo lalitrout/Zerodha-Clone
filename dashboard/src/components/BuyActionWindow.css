@@ -1,11 +1,11 @@
-.contain {
+.container {
     --radius: 4px;
     width: 40%;
     height: 63%;
     background: rgb(245, 245, 245);
     position: absolute;
     bottom: 0;
-    left: 35%;
+    left: 5%;
     cursor: move;
     box-sizing: border-box;
     z-index: 100;

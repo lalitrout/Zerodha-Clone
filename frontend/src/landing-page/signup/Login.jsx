@@ -28,7 +28,7 @@ const Login = () => {
       setSuccess(true);
 
       setTimeout(() => {
-        window.location.href = "https://dashboard-8jy230lg2-lalit-routs-projects.vercel.app/"; // Redirect after login
+        window.location.href = "https://dashboard-plum-iota.vercel.app/"; // Redirect after login
       }, 2000);
     } catch (error) {
       console.log(error);

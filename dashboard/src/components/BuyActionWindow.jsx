@@ -35,7 +35,7 @@ const BuyActionWindow = ({ uid }) => {
   };
 
   return (
-    <div className="contain" id="buy-window" draggable="true">
+    <div className="container" id="buy-window" draggable="true">
       <div className="regular-order">
         <div className="inputs">
           <fieldset>
@@ -55,7 +55,7 @@ const BuyActionWindow = ({ uid }) => {
               type="number"
               name="price"
               id="price"
-              step="0.05"
+              step="100"
               onChange={(e) => setStockPrice(Number(e.target.value))}
               value={stockPrice}
               min="0"
@@ -67,7 +67,12 @@ const BuyActionWindow = ({ uid }) => {
       {error && <p className="error">{error}</p>}
 
       <div className="buttons">
-        <span>Margin required ₹{(stockQuantity * stockPrice).toFixed(2)}</span>
+        <span>
+          Margin required ₹
+          {stockQuantity > 0 && stockPrice > 0
+            ? (stockQuantity * stockPrice).toFixed(2)
+            : "0.0"}
+        </span>
         <div>
           <button className="btn btn-blue" onClick={handleBuyClick}>
             Buy

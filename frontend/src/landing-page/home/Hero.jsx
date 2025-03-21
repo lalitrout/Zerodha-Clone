@@ -13,7 +13,7 @@ function Hero() {
         <button
           className="p-2 btn btn-primary w-25 w-md-25 mx-auto d-block" style={{fontSize: "16px"}}
         >
-          Sign up Now
+          <a href="/signup" style={{textDecoration: "none", color: "white"}}>Sign up Now</a>
         </button>
       </div>
     </div>

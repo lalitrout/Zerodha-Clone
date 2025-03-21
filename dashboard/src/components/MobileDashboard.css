@@ -1,5 +1,5 @@
-.mobile-dashboard {
-    width: 100vw; /* Ensure full width */
+/* .mobile-dashboard {
+    width: 100vw;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -7,4 +7,4 @@
     background-color: #f8f9fa;
     overflow-x: hidden;
   }
-  
+   */
